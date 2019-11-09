@@ -27,15 +27,16 @@ public class CameraController : MonoBehaviour
         temp = offset2;
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-        if (moveHorizontal == 1f)
+        if (moveHorizontal >=0.5f)
         {
             desiredPosition = target.position + right;
-        }else if(moveHorizontal == -1f)
+        }else if(moveHorizontal <= -0.5f)
         {
             desiredPosition = target.position + left;
         }
         else
         {
+            new WaitForSeconds(5);
             desiredPosition = target.position + center;
         }
         if(moveVertical == 1f)
