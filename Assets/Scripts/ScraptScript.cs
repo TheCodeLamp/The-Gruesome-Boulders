@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScraptScript : MonoBehaviour
 {
 
-    public Rigidbody2D scrap;
+    public GameObject scrap;
     public float speed;
 
 
@@ -18,6 +18,16 @@ public class ScraptScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scrap.velocity = transform.right * speed;
+        scrap.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
+        if(scrap.transform.position.x < -100f || scrap.transform.position.x > 100)
+        {
+            Destroy(scrap);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        scrap.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
+        Destroy(scrap);
     }
 }
