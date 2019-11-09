@@ -214,11 +214,13 @@
         <e p="Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
           <e p="CameraM.cs" t="Include" />
+          <e p="Combustion.cs" t="Include" />
           <e p="MplayerMove.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerMove.cs" t="Include" />
           <e p="ScraptScript.cs" t="Include" />
           <e p="Shooting.cs" t="Include" />
+          <e p="spikesScript.cs" t="Include" />
         </e>
       </e>
       <e p="AstarPathfindingProject.csproj" t="IncludeRecursive" />
