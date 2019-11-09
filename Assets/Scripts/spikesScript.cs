@@ -23,7 +23,12 @@ public class spikesScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        spikes.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
-        Destroy(spikes);
+        if(collision.gameObject.CompareTag("ground")){
+            Destroy(spikes);
+        }   
+        if(collision.gameObject.CompareTag("machine")){
+            Destroy(spikes);
+        }
+        
     }
 }

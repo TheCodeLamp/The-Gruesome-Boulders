@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public Transform firepoint4;
     public float speed;
     public Rigidbody2D p1;
+    public Rigidbody p2;
     public float moveX;
     public float direction;
     public float jumpForce;
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private bool jumped;
     private bool charge;
     public float partsCapacity = 100f;
-    private float parts = 0f;
+    public float parts = 0f;
 
     public GameObject scrapPrefab;
     private float ability1;
@@ -34,6 +35,12 @@ public class PlayerController : MonoBehaviour
     private float ability2;
     public float costAbility2;
     private bool ability2Pressed;
+    public GameObject combustionPrefab;
+    public GameObject explosionobject;
+    private float ability3;
+    public float costAbility3;
+    private bool ability3Pressed;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -54,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
         float jumpValue = Input.GetAxis("Jump");
 
-        //Handeles ability1
+        //Handles ability1
         ability1 = Input.GetAxis("Fire1");
         if(ability1 == 1f)
         {
@@ -69,7 +76,7 @@ public class PlayerController : MonoBehaviour
             }
             ability1Pressed = false;
         }
-        //Handeles ability1
+        //Handles ability2
         ability2 = Input.GetAxis("Fire2");
         if (ability2 == 1f)
         {
@@ -87,6 +94,21 @@ public class PlayerController : MonoBehaviour
             ability2Pressed = false;
         }
 
+        //Handles ability3
+        ability3 = Input.GetAxis("Fire3");
+        if (ability3 == 1f)
+        {
+            ability3Pressed = true;
+        }
+        if (ability3 == 0f)
+        {
+            if (parts >= costAbility3 && ability3Pressed)
+            {
+                parts -= costAbility2;
+                print("pangpang");
+            }
+            ability3Pressed = false;
+        }
 
         if (moveHorizontal > 0)
         {
@@ -155,7 +177,7 @@ public class PlayerController : MonoBehaviour
         //p1.GetComponent<BoxCollider2D>().OverlapCollider
 
 
-        print(parts);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
