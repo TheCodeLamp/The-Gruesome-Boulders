@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Transform firepoint2;
     public Transform firepoint3;
     public Transform firepoint4;
+    public Transform firepoint5;
     public float speed;
     public Rigidbody2D p1;
     public Rigidbody p2;
@@ -104,8 +105,9 @@ public class PlayerController : MonoBehaviour
         {
             if (parts >= costAbility3 && ability3Pressed)
             {
-                parts -= costAbility2;
+                parts -= costAbility3;
                 print("pangpang");
+                Instantiate(explosionobject, firepoint5.position, firepoint5.rotation);
             }
             ability3Pressed = false;
         }
