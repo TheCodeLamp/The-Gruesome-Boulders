@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed;
 
     // Start is called before the first frame update
+    public GameObject scrapPrefab;
+    public Transform firepoint;
     public float speed;
     public Rigidbody2D p1;
     public float moveX;
@@ -20,12 +22,16 @@ public class PlayerController : MonoBehaviour
     private bool charge;
     public float partsCapacity = 100f;
     private float parts = 0f;
+    private float ability1;
+    public float costAbility1;
+    private bool ability1Pressed;
     void Start()
     {
         anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
         charge = false;
+
     }
 
     // Update is called once per frame
@@ -38,7 +44,23 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         float jumpValue = Input.GetAxis("Jump");
-        if(moveHorizontal > 0)
+        ability1 = Input.GetAxis("Fire1");
+
+        if(ability1 == 1f)
+        {
+            ability1Pressed = true;
+        }
+        if (ability1 == 0f)
+        {
+            if (parts >= costAbility1 && ability1Pressed)
+            {
+                parts -= costAbility1;
+                Instantiate(scrapPrefab, firepoint.position, firepoint.rotation);
+                ability1Pressed = false;
+            }
+        }
+
+        if (moveHorizontal > 0)
         {
             anim.SetBool("IsRunning", true);
             moveX = 1f;
