@@ -56,8 +56,8 @@ public class PlayerController : MonoBehaviour
             {
                 parts -= costAbility1;
                 Instantiate(scrapPrefab, firepoint.position, firepoint.rotation);
-                ability1Pressed = false;
             }
+            ability1Pressed = false;
         }
 
         if (moveHorizontal > 0)

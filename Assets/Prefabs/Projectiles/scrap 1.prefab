@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc389838c6daa4722b226c4a0ee1b05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrap: {fileID: 7185631970984318313}
-  speed: 10
+  scrap: {fileID: 3802723466598836843}
+  speed: 6
 --- !u!61 &2072085045874163899
 BoxCollider2D:
   m_ObjectHideFlags: 0
