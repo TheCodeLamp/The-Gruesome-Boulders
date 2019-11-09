@@ -1,6 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="C:\Users\edvin\.Rider2019.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\edvin\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_The-Gruesome-Boulders.-1133755189.00" t="ExcludeRecursive" />
     <e p="C:\Users\edvin\Documents\Gitgub\The-Gruesome-Boulders" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -17,6 +18,7 @@
               <e p="AIBase.cs" t="Include" />
               <e p="AILerp.cs" t="Include" />
               <e p="AIPath.cs" t="Include" />
+              <e p="IAstarAI.cs" t="Include" />
               <e p="NavmeshController.cs" t="Include" />
               <e p="Seeker.cs" t="Include" />
               <e p="TurnBasedAI.cs" t="Include" />
@@ -212,9 +214,10 @@
         <e p="Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
           <e p="CameraM.cs" t="Include" />
-          <e p="IAstarAI.cs" t="Include" />
+          <e p="MplayerMove.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerMove.cs" t="Include" />
+          <e p="Shooting.cs" t="Include" />
         </e>
       </e>
       <e p="AstarPathfindingProject.csproj" t="IncludeRecursive" />
