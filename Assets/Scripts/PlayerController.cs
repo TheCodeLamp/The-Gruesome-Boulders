@@ -8,8 +8,11 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed;
 
     // Start is called before the first frame update
-    public GameObject scrapPrefab;
+
     public Transform firepoint;
+    public Transform firepoint2;
+    public Transform firepoint3;
+    public Transform firepoint4;
     public float speed;
     public Rigidbody2D p1;
     public float moveX;
@@ -22,9 +25,15 @@ public class PlayerController : MonoBehaviour
     private bool charge;
     public float partsCapacity = 100f;
     private float parts = 0f;
+
+    public GameObject scrapPrefab;
     private float ability1;
     public float costAbility1;
     private bool ability1Pressed;
+    public GameObject spikesPrefab;
+    private float ability2;
+    public float costAbility2;
+    private bool ability2Pressed;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,8 +53,9 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         float jumpValue = Input.GetAxis("Jump");
-        ability1 = Input.GetAxis("Fire1");
 
+        //Handeles ability1
+        ability1 = Input.GetAxis("Fire1");
         if(ability1 == 1f)
         {
             ability1Pressed = true;
@@ -59,6 +69,24 @@ public class PlayerController : MonoBehaviour
             }
             ability1Pressed = false;
         }
+        //Handeles ability1
+        ability2 = Input.GetAxis("Fire2");
+        if (ability2 == 1f)
+        {
+            ability2Pressed = true;
+        }
+        if (ability2 == 0f)
+        {
+            if (parts >= costAbility2 && ability2Pressed)
+            {
+                parts -= costAbility2;
+                Instantiate(spikesPrefab, firepoint2.position, firepoint2.rotation);
+                Instantiate(spikesPrefab, firepoint3.position, firepoint3.rotation);
+                Instantiate(spikesPrefab, firepoint4.position, firepoint4.rotation);
+            }
+            ability2Pressed = false;
+        }
+
 
         if (moveHorizontal > 0)
         {
