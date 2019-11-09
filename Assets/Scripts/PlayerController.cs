@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCap;
     public float jumpFrame;
+    private Animator anim;
     private bool jumped;
     private bool charge;
     public float partsCapacity = 100f;
     private float parts = 0f;
     void Start()
     {
+        anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
         charge = false;
@@ -38,21 +40,25 @@ public class PlayerController : MonoBehaviour
         float jumpValue = Input.GetAxis("Jump");
         if(moveHorizontal > 0)
         {
+            anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
 
         }else if(moveHorizontal < 0)
         {
+            anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
         }
         else
         {
+            anim.SetBool("IsRunning", false);
             moveX = 0f;
         }
         if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
             jumpForce = 350f;
+            anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
             jumped = true;
@@ -77,6 +83,10 @@ public class PlayerController : MonoBehaviour
             jumpForce = 0f;
             charge = false;
         }
+        else
+        {
+            anim.SetBool("IsJumping", false);
+        }
 
         p1.transform.position = new Vector3(p1.transform.position.x + moveX*speed, p1.transform.position.y , p1.transform.position.z);
 
@@ -85,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
         print(parts);
     }
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("ground"))
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
             if(parts < partsCapacity)
             {
                 parts+=0.5f;
-                
+
             }
         }
 
