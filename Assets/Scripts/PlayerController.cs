@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCap;
     public float jumpFrame;
+    private Animator anim;
     void Start()
     {
+        anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
     }
@@ -31,24 +33,34 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         float jumpValue = Input.GetAxis("Jump");
-        if(moveHorizontal > 0)
+        if (moveHorizontal > 0)
         {
+            anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
 
-        }else if(moveHorizontal < 0)
+        }
+        else if (moveHorizontal < 0)
         {
+            anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
         }
         else
         {
+            anim.SetBool("IsRunning", false);
             moveX = 0f;
         }
-        if(jumpValue > 0 && jumpFrame < jumpCap)
+
+        if (jumpValue > 0 && jumpFrame < jumpCap)
         {
+            anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
+        }
+        else
+        {
+            anim.SetBool("IsJumping", false);
         }
 
         p1.transform.position = new Vector3(p1.transform.position.x + moveX*speed, p1.transform.position.y , p1.transform.position.z);
