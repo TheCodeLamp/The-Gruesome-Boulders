@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
             jumpForce = 350f;
-            //anim.SetBool("IsJumping", true);
+            anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
             jumped = true;
@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
         //Här börjar chargejump extra feature
         if(jumpValue == 1f && (Input.GetKey(KeyCode.LeftShift) || charge) && !jumped)
         {
+            anim.SetBool("IsJumping", true);
             if (jumpForce < 500)
             {
                 jumpForce+=10f;
@@ -138,6 +139,7 @@ public class PlayerController : MonoBehaviour
 
         if(jumpValue == 0f && Input.GetKey(KeyCode.LeftShift) && !jumped)
         {
+            anim.SetBool("IsJumping", true);
             jumped = true;
             p1.AddForce(new Vector2(0f, jumpForce));
             jumpForce = 0f;

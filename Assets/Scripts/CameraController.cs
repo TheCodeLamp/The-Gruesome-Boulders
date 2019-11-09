@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     public Vector3 center;
     public Vector3 up;
     public Vector3 down;
+    private Animator anim;
     private Vector3 desiredPosition;
     private float camerashift;
     public float temp = 1f;
@@ -52,6 +53,7 @@ public class CameraController : MonoBehaviour
         {
             whenStationary(moveHorizontal);
             desiredPosition += down;
+            
         }
 
 
