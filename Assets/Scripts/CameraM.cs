@@ -5,10 +5,6 @@ using UnityEngine;
 public class CameraM : MonoBehaviour
 {
     [Header("Camera Sensitivity")]
-    [Range(0.0f, 1.0f)]
-    public float horizontalSens;
-    [Range(0.0f, 1.0f)]
-    public float verticalSens;
     public int horizontalOffset;
     public float smoothnessX, smoothnessY;
     [Header("Player Reference")]
@@ -20,6 +16,7 @@ public class CameraM : MonoBehaviour
     private Camera mainCam; //Referens till kameran som detta script sitter på.
     private MplayerMove playerScript;
     private int cameraOffset;
+    
 
     void FixedUpdate()
     {
@@ -46,7 +43,8 @@ public class CameraM : MonoBehaviour
         }
         else
         {
-            cameraOffset = cameraOffset/2;
+            // cameraOffset = cameraOffset / 4;
+            cameraOffset = 0;
         }
 
         // Horizontal
