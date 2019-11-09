@@ -70,6 +70,10 @@ public class PlayerController : MonoBehaviour
             jumped = true;
             jumpForce = 0f;
         }
+        else
+        {
+            anim.SetBool("IsJumping", false);
+        }
 
         //Här börjar chargejump extra feature
         if(jumpValue == 1f && (Input.GetKey(KeyCode.LeftShift) || charge) && !jumped)
