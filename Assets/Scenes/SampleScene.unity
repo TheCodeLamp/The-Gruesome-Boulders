@@ -179,6 +179,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2159026275870856230, guid: 30f87ad6a6b92a74c9f7a00475006548,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f87ad6a6b92a74c9f7a00475006548, type: 3}
 --- !u!1 &257882562
@@ -426,6 +431,16 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8131960756795615867, guid: 750daeddc635c0d44bfd19feb1f20163,
+        type: 3}
+      propertyPath: jumpStrength
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131960756795615867, guid: 750daeddc635c0d44bfd19feb1f20163,
+        type: 3}
+      propertyPath: camScript
+      value: 
+      objectReference: {fileID: 519420030}
     m_RemovedComponents:
     - {fileID: 1745482779187890344, guid: 750daeddc635c0d44bfd19feb1f20163, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 750daeddc635c0d44bfd19feb1f20163, type: 3}
@@ -502,8 +517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalSens: 0.55
   verticalSens: 0
-  horizontalOffset: 3
-  smoothnessX: 0.08
+  horizontalOffset: 6
+  smoothnessX: 0.05
   smoothnessY: 0.1
   playerObj: {fileID: 375134250}
 --- !u!20 &519420031
