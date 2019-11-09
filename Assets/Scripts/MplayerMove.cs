@@ -42,7 +42,7 @@ public class MplayerMove : MonoBehaviour
 
         if(verticalAxis > 0)
         {
-            
+
         }
 
         deltaMove.x = moveDirX * moveSpeed;
