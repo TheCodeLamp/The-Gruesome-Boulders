@@ -16,11 +16,14 @@ public class PlayerController : MonoBehaviour
     public float jumpCap;
     public float jumpFrame;
     private Animator anim;
+    private bool jumped;
+    private bool charge;
     void Start()
     {
         anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
+        charge = false;
     }
 
     // Update is called once per frame
@@ -33,14 +36,13 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         float jumpValue = Input.GetAxis("Jump");
-        if (moveHorizontal > 0)
+        if(moveHorizontal > 0)
         {
             anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
 
-        }
-        else if (moveHorizontal < 0)
+        }else if(moveHorizontal < 0)
         {
             anim.SetBool("IsRunning", true);
             moveX = -1f;
@@ -51,12 +53,33 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsRunning", false);
             moveX = 0f;
         }
-
-        if (jumpValue > 0 && jumpFrame < jumpCap)
+        if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
+            jumpForce = 350f;
             anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
+            jumped = true;
+            jumpForce = 0f;
+        }
+
+        //Här börjar chargejump extra feature
+        if(jumpValue == 1f && (Input.GetKey(KeyCode.LeftShift) || charge) && !jumped)
+        {
+            if (jumpForce < 500)
+            {
+                jumpForce+=10f;
+            }
+            charge = true;
+
+        }
+
+        if(jumpValue == 0f && Input.GetKey(KeyCode.LeftShift) && !jumped)
+        {
+            jumped = true;
+            p1.AddForce(new Vector2(0f, jumpForce));
+            jumpForce = 0f;
+            charge = false;
         }
         else
         {
@@ -74,6 +97,8 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         jumpFrame = 0f;
+        jumped = false;
+
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -81,6 +106,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        jumped = false;
         jumpFrame = 0f;
     }
 }
