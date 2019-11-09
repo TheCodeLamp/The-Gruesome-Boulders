@@ -4,32 +4,45 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float boostSpeed;
-    public GameObject player;
-    private float distanceX;
-    public Camera cam;
+    public Transform target;
+
+    public float smoothSpeed = 0.125f;
+    public Vector3 offset;
+    private float camerashift;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
-        if(moveHorizontal == 1f)
+        if (moveHorizontal == 1f)
         {
-            Vector3 cameraChange = new Vector3(0.01f, 0, 0);
-            cam.transform.position += cameraChange;
-        }
-        else if (moveHorizontal == -1f)
+            camerashift = 1f;
+        }else if(moveHorizontal == -1)
         {
-            Vector3 cameraChange = new Vector3(-0.01f, 0, 0);
-            cam.transform.position += cameraChange;
+            camerashift = -1f;
         }
+        if(offset.x < 0 && camerashift == -1f)
+        {
+            offset = new Vector3(offset.x, offset.y, offset.z);
+        }else if (offset.x < 0 && camerashift == 1f)
+        {
+            offset = new Vector3((-1)*offset.x, offset.y, offset.z);
+        }
+        else if (offset.x > 0 && camerashift == 1f)
+        {
+            offset = new Vector3(offset.x, offset.y, offset.z);
+        }
+        else if (offset.x > 0 && camerashift == -1f)
+        {
+            offset = new Vector3((-1) * offset.x, offset.y, offset.z);
+        }
+
+        Vector3 desiredPosition = target.position + offset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
     }
 
-    float getDistance()
-    {
-        distanceX = player.transform.position.x - transform.position.x;
-        return distanceX;
-    }
-    
+
+
 }
+
