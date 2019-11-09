@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float jumpFrame;
     private bool jumped;
     private bool charge;
+    public float partsCapacity = 100f;
+    private float parts = 0f;
     void Start()
     {
         p1 = GetComponent<Rigidbody2D>();
@@ -81,13 +83,17 @@ public class PlayerController : MonoBehaviour
         //p1.GetComponent<BoxCollider2D>().OverlapCollider
 
 
-
+        print(parts);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        jumpFrame = 0f;
-        jumped = false;
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            jumpFrame = 0f;
+            jumped = false;
+        }
+
 
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -96,8 +102,19 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        jumped = false;
-        jumpFrame = 0f;
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            jumpFrame = 0f;
+            jumped = false;
+        }
+        if (collision.gameObject.CompareTag("machine") && Input.GetKey(KeyCode.E))
+        {
+            if(parts < partsCapacity)
+            {
+                parts+=0.5f;
+                
+            }
+        }
 
     }
 }
