@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Input Variables")]
+    public float walkSpeed;
+
     // Start is called before the first frame update
     public float speed;
     public Rigidbody2D p1;
@@ -26,5 +29,10 @@ public class PlayerController : MonoBehaviour
 
         //Call the AddForce function of our Rigidbody2D rb2d supplying movement multiplied by speed to move our player.
         p1.AddForce(movement * speed);
+    }
+
+    void VerticalMovement()
+    {
+
     }
 }
