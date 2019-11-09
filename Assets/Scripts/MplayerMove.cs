@@ -10,14 +10,13 @@ public class MplayerMove : MonoBehaviour
 
     public float jumpStrength;
     
-    [HideInInspector]
+
     public int moveDirX, moveDirY;
     public CameraM camScript;
 
     private float horizontalAxis;
-    private float jumpAxis;
+    private float verticalAxis;
     private Vector3 deltaMove = new Vector3();
-    private Collider2D playercol;
 
     private void FixedUpdate()
     {
@@ -27,7 +26,7 @@ public class MplayerMove : MonoBehaviour
     void MoveInput()
     {
         horizontalAxis = Input.GetAxis("Horizontal");
-      
+        verticalAxis = Input.GetAxis("Vertical");
         if (horizontalAxis > 0)
         {
             moveDirX = 1;
@@ -40,21 +39,13 @@ public class MplayerMove : MonoBehaviour
         {
             moveDirX = 0;
         }
-        
+
+        if(verticalAxis > 0)
+        {
+
+        }
+
         deltaMove.x = moveDirX * moveSpeed;
-
-        jumpAxis = Input.GetAxis("Jump");
-
-        if(jumpAxis > 0)
-        {
-            moveDirY = 1;
-        }
-        else
-        {
-            moveDirY = 0;
-        }
-
-        deltaMove.y = moveDirY * jumpStrength;
         
         //Apply Changes
         transform.position += deltaMove;
