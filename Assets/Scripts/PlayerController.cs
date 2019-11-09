@@ -15,10 +15,13 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCap;
     public float jumpFrame;
+    private bool jumped;
+    private bool charge;
     void Start()
     {
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
+        charge = false;
     }
 
     // Update is called once per frame
@@ -45,23 +48,47 @@ public class PlayerController : MonoBehaviour
         {
             moveX = 0f;
         }
-        if(jumpValue > 0 && jumpFrame < jumpCap)
+        if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
+            jumpForce = 350f;
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
+            jumped = true;
+            jumpForce = 0f;
+        }
+
+        //Här börjar chargejump extra feature
+        if(jumpValue == 1f && (Input.GetKey(KeyCode.LeftShift) || charge) && !jumped)
+        {
+            if (jumpForce < 500)
+            {
+                jumpForce+=10f;
+            }
+            charge = true;
+
+        }
+
+        if(jumpValue == 0f && Input.GetKey(KeyCode.LeftShift) && !jumped)
+        {
+            jumped = true;
+            p1.AddForce(new Vector2(0f, jumpForce));
+            jumpForce = 0f;
+            charge = false;
         }
 
         p1.transform.position = new Vector3(p1.transform.position.x + moveX*speed, p1.transform.position.y , p1.transform.position.z);
-       
+
         //p1.GetComponent<BoxCollider2D>().OverlapCollider
 
-        
+
 
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         jumpFrame = 0f;
+        jumped = false;
+
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -69,6 +96,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        jumped = false;
         jumpFrame = 0f;
+
     }
 }
