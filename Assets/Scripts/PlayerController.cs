@@ -43,12 +43,18 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
+            var angles = transform.rotation.eulerAngles;
+            angles.y = 180;
+            p1.transform.rotation = Quaternion.Euler(angles);
 
         }else if(moveHorizontal < 0)
         {
             anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
+            var angles = transform.rotation.eulerAngles;
+            angles.y = 0;
+            p1.transform.rotation = Quaternion.Euler(angles);
         }
         else
         {
@@ -58,7 +64,7 @@ public class PlayerController : MonoBehaviour
         if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
             jumpForce = 350f;
-            anim.SetBool("IsJumping", true);
+            //anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
             jumped = true;
