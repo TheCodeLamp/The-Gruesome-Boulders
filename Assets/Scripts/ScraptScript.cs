@@ -19,10 +19,6 @@ public class ScraptScript : MonoBehaviour
     void Update()
     {
         scrap.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
-        if(scrap.transform.position.x < -100f || scrap.transform.position.x > 100)
-        {
-            Destroy(scrap);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -48,7 +48,9 @@ public class PlayerController : MonoBehaviour
     public CircleCollider2D ability3collider;
     public List<CircleCollider2D> objects;
     public CircleCollider2D[] colliders;
-
+    public GameObject explosionBOI;
+    public GameObject explosionBOI2;
+    public GameObject explosionBOI3;
     //Make sure you attach a Rigidbody in the Inspector of this GameObject
     public Rigidbody m_Rigidbody;
     public Vector3 m_EulerAngleVelocity;
@@ -95,7 +97,7 @@ public class PlayerController : MonoBehaviour
         }
         //Handles ability2
         ability2 = Input.GetAxis("Fire2");
-        if (ability2 == 1f)
+        if (ability2 == 1f && !jumped)
         {
             ability2Pressed = true;
         }
@@ -104,8 +106,6 @@ public class PlayerController : MonoBehaviour
             if (parts >= costAbility2 && ability2Pressed)
             {
                 parts -= costAbility2;
-                Instantiate(spikesPrefab, firepoint2.position, firepoint2.rotation);
-                Instantiate(spikesPrefab, firepoint3.position, firepoint3.rotation);
                 Instantiate(spikesPrefab, firepoint4.position, firepoint4.rotation);
             }
             ability2Pressed = false;
@@ -143,16 +143,49 @@ public class PlayerController : MonoBehaviour
             combustionPrefab2.SetActive(false);
             combustionPrefab3.SetActive(false);
         }
+       
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            explosionBOI.SetActive(true);
 
+            if (direction == 1f)
+            {
+                explosionBOI.transform.position = new Vector3(p1.transform.position.x -
+            direction * Mathf.Abs(p1.transform.position.x - explosionBOI.transform.position.x),
+                explosionBOI.transform.position.y, explosionBOI.transform.position.z);
+            }
+            if (direction == -1f)
+            {
+                explosionBOI.transform.position = new Vector3(p1.transform.position.x +
+            direction * Mathf.Abs(p1.transform.position.x - explosionBOI.transform.position.x),
+                explosionBOI.transform.position.y, explosionBOI.transform.position.z);
+            }
+
+        }
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            explosionBOI.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            explosionBOI.SetActive(false);
+            explosionBOI2.SetActive(true);
+            explosionBOI3.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            explosionBOI2.SetActive(false);
+            explosionBOI3.SetActive(false);
+        }
 
 
         if (Input.GetKey(KeyCode.Q))
         {
-            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, -100f * Time.deltaTime);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, -200f * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.R))
         {
-            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, 100f * Time.deltaTime);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, 200f * Time.deltaTime);
         }
 
         if (moveHorizontal > 0f)
@@ -170,7 +203,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("IsRunning", true);
             moveX = -1f;
-            direction = 1f;
+            direction = -1f;
             var angles = transform.rotation.eulerAngles;
             angles.y = 0;
             p1.transform.rotation = Quaternion.Euler(angles);
@@ -255,4 +288,15 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    public void explode()
+    {
+        explosionBOI.SetActive(false);
+        explosionBOI2.SetActive(true);
+
+    }
+
+
+
+
 }
