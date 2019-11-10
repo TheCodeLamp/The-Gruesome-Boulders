@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class explosion : MonoBehaviour
 {
-    public GameObject explosionobject;
+
     // Start is called before the first frame update
+    public float horizontal;
+    public float dir;
+    public GameObject player;
+    public GameObject thiseOne;
     void Start()
     {
-        
+        thiseOne.SetActive(false);
+        dir = -1f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire3"))
+        horizontal = Input.GetAxis("Horizontal");
+        if(horizontal == 1f)
         {
-            Instantiate(explosionobject, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
-            Destroy(explosionobject);
-            
-
-      
+            dir = 1f;
         }
-        if (Input.GetButtonDown("Submit"))
+        if(horizontal == -1f)
         {
-            explosionobject.GetComponent<PointEffector2D>().forceMagnitude *= -1f;
+            dir = -1f;
         }
-
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow) && dir == -1f)
+        {
+            collision.gameObject.transform.position = new Vector3(player.transform.position.x + (player.transform.position.x - collision.gameObject.transform.position.x),
+                collision.gameObject.transform.position.y, collision.gameObject.transform.position.y);
+        }else if (Input.GetKeyDown(KeyCode.LeftArrow) && dir == 1f)
+        {
+            collision.gameObject.transform.position = new Vector3(player.transform.position.x - (player.transform.position.x - collision.gameObject.transform.position.x),
+                collision.gameObject.transform.position.y, collision.gameObject.transform.position.y);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public Transform firepoint5;
     public float speed;
     public Rigidbody2D p1;
-    public Rigidbody p2;
+    public GameObject playerGameObj;
     public float moveX;
     public float direction;
     public float jumpForce;
@@ -37,17 +37,24 @@ public class PlayerController : MonoBehaviour
     public float costAbility2;
     private bool ability2Pressed;
     public GameObject combustionPrefab;
-    public GameObject explosionobject;
+    public GameObject combustionPrefab2;
+    public GameObject combustionPrefab3;
     private float ability3;
     public float costAbility3;
     private bool ability3Pressed;
 
+
+    public CircleCollider2D ability3collider;
+    public List<CircleCollider2D> objects;
+    public CircleCollider2D[] colliders;
     void Start()
     {
         anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
         charge = false;
+        combustionPrefab.SetActive(false);
+        combustionPrefab2.SetActive(false);
 
     }
 
@@ -107,9 +114,18 @@ public class PlayerController : MonoBehaviour
             {
                 parts -= costAbility3;
                 print("pangpang");
-                Instantiate(explosionobject, firepoint5.position, firepoint5.rotation);
+                combustionPrefab.SetActive(true);
+
+                //(Instantiate(explosionobject, firepoint5.position, firepoint5.rotation) as GameObject).transform.parent = playerGameObj.transform;
             }
             ability3Pressed = false;
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            combustionPrefab.SetActive(false);
+            combustionPrefab2.SetActive(true);
+            combustionPrefab3.SetActive(true);
+            print("pooooof");
         }
 
         if (moveHorizontal > 0)
@@ -120,7 +136,6 @@ public class PlayerController : MonoBehaviour
             var angles = transform.rotation.eulerAngles;
             angles.y = 180;
             p1.transform.rotation = Quaternion.Euler(angles);
-
         }else if(moveHorizontal < 0)
         {
             anim.SetBool("IsRunning", true);
