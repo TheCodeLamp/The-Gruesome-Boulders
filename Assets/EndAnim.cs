@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EndAnim : StateMachineBehaviour
 {
-    
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("IsCompressing", false);
     }
