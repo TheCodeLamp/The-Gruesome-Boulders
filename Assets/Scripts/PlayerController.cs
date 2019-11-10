@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     public GameObject combustionPrefab;
     public GameObject combustionPrefab2;
     public GameObject combustionPrefab3;
+    public GameObject explosionglobalboi;
     private float ability3;
     public float costAbility3;
     private bool ability3Pressed;
@@ -147,12 +148,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            rotationAxis.transform.RotateAround(p1.transform.position, Vector3.forward, -100f * Time.deltaTime);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, -100f * Time.deltaTime);
         }
-        if (moveHorizontal > 0)
+        if (Input.GetKey(KeyCode.R))
         {
-            rotationAxis.transform.position = new Vector3(p1.transform.position.x +
-            ((p1.transform.position.x+0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, 100f * Time.deltaTime);
+        }
+
+        if (moveHorizontal > 0f)
+        {
             anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
@@ -160,17 +164,17 @@ public class PlayerController : MonoBehaviour
             angles.y = 180;
             p1.transform.rotation = Quaternion.Euler(angles);
 
+
         }
-        else if(moveHorizontal < 0)
+        else if(moveHorizontal < 0f)
         {
-            rotationAxis.transform.position = new Vector3(p1.transform.position.x -
-            ((p1.transform.position.x + 0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
             anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
             var angles = transform.rotation.eulerAngles;
             angles.y = 0;
             p1.transform.rotation = Quaternion.Euler(angles);
+
         }
         else
         {
@@ -185,15 +189,16 @@ public class PlayerController : MonoBehaviour
             jumpFrame++;
             jumped = true;
             jumpForce = 0f;
+
         }
 
         //Här börjar chargejump extra feature
         if(jumpValue == 1f && (Input.GetKey(KeyCode.LeftShift) || charge) && !jumped)
         {
             anim.SetBool("IsJumping", true);
-            if (jumpForce < 500)
+            if (jumpForce < 5000)
             {
-                jumpForce+=10f;
+                jumpForce+=100f;
             }
             charge = true;
 
@@ -221,25 +226,24 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
 
-            anim.SetBool("IsJumping", false);
-            jumpFrame = 0f;
-            jumped = false;
+            resetJump();
         }
 
 
     }
-    private void OnTriggerExit2D(Collider2D other)
+    public void resetJump()
     {
-
+        anim.SetBool("IsJumping", false);
+        jumpFrame = 0f;
+        jumped = false;
     }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("ground"))
         {
 
-            anim.SetBool("IsJumping", false);
-            jumpFrame = 0f;
-            jumped = false;
+            resetJump();
         }
         if (collision.gameObject.CompareTag("machine") && Input.GetKey(KeyCode.E))
         {
