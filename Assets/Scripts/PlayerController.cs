@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed;
 
     // Start is called before the first frame update
-
+    public float combustionCoolDown = 1f;
     public Transform firepoint;
     public Transform firepoint2;
     public Transform firepoint3;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private bool charge;
     public float partsCapacity = 100f;
     public float parts = 0f;
-
+    public float currentTime;
     public GameObject scrapPrefab;
     private float ability1;
     public float costAbility1;
@@ -123,16 +123,39 @@ public class PlayerController : MonoBehaviour
             {
                 parts -= costAbility3;
                 print("pangpang");
+                currentTime = Time.time;
+                float currentTime2 = Time.time;
                 combustionPrefab.SetActive(true);
+                if (Time.time - currentTime >= combustionCoolDown)
+                {
+                    combustionPrefab.SetActive(false);
+                    combustionPrefab2.SetActive(true);
+                    combustionPrefab3.SetActive(true);
+                }
+                combustionPrefab.SetActive(false);
+
 
 
                 //(Instantiate(explosionobject, firepoint5.position, firepoint5.rotation) as GameObject).transform.parent = playerGameObj.transform;
             }
+
             ability3Pressed = false;
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            explosionBOI.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            explosionBOI.SetActive(false);
+            combustionPrefab2.SetActive(true);
+            combustionPrefab3.SetActive(true);
+        }
+
         if (Input.GetKeyDown(KeyCode.O))
         {
-            combustionPrefab.SetActive(false);
+            explosionBOI.SetActive(false);
             combustionPrefab2.SetActive(true);
             combustionPrefab3.SetActive(true);
             print("pooooof");
@@ -148,13 +171,13 @@ public class PlayerController : MonoBehaviour
         {
             explosionBOI.SetActive(true);
 
-            if (direction == 1f)
+            if (direction > 0f)
             {
-                explosionBOI.transform.position = new Vector3(p1.transform.position.x -
+                explosionBOI.transform.position = new Vector3(p1.transform.position.x +
             direction * Mathf.Abs(p1.transform.position.x - explosionBOI.transform.position.x),
                 explosionBOI.transform.position.y, explosionBOI.transform.position.z);
             }
-            if (direction == -1f)
+            if (direction < 0f)
             {
                 explosionBOI.transform.position = new Vector3(p1.transform.position.x +
             direction * Mathf.Abs(p1.transform.position.x - explosionBOI.transform.position.x),
@@ -181,11 +204,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, -200f * Time.deltaTime);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, 200f * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.R))
         {
-            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, 200f * Time.deltaTime);
+            explosionglobalboi.transform.RotateAround(p1.transform.position, Vector3.forward, -200f * Time.deltaTime);
         }
 
         if (moveHorizontal > 0f)
@@ -196,7 +219,8 @@ public class PlayerController : MonoBehaviour
             var angles = transform.rotation.eulerAngles;
             angles.y = 180;
             p1.transform.rotation = Quaternion.Euler(angles);
-
+            combustionPrefab2.SetActive(false);
+            combustionPrefab3.SetActive(false);
 
         }
         else if(moveHorizontal < 0f)
@@ -207,7 +231,8 @@ public class PlayerController : MonoBehaviour
             var angles = transform.rotation.eulerAngles;
             angles.y = 0;
             p1.transform.rotation = Quaternion.Euler(angles);
-
+            combustionPrefab2.SetActive(false);
+            combustionPrefab3.SetActive(false);
         }
         else
         {

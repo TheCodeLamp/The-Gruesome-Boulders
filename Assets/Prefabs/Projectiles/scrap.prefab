@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrap: {fileID: 3802723466598836843}
-  speed: 6
+  speed: 15
 --- !u!61 &2072085045874163899
 BoxCollider2D:
   m_ObjectHideFlags: 0

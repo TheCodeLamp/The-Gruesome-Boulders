@@ -93,6 +93,7 @@ public class CleanController : MonoBehaviour
             Combustion.SetActive(true);
             Combustion.transform.SetParent(null);
             currentTime = Time.time;
+
         }
     }
 
