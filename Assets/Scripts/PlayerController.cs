@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsRunning", false);
             moveX = 0f;
         }
-        if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
+        if (jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
             jumpForce = 3500f;
             anim.SetBool("IsJumping", true);
@@ -185,10 +185,6 @@ public class PlayerController : MonoBehaviour
             jumpFrame++;
             jumped = true;
             jumpForce = 0f;
-        }
-        else
-        {
-            anim.SetBool("IsJumping", false);
         }
 
         //Här börjar chargejump extra feature
@@ -211,10 +207,6 @@ public class PlayerController : MonoBehaviour
             jumpForce = 0f;
             charge = false;
         }
-        else
-        {
-            anim.SetBool("IsJumping", false);
-        }
 
         p1.transform.position = new Vector3(p1.transform.position.x + moveX*speed, p1.transform.position.y , p1.transform.position.z);
 
@@ -228,6 +220,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
+
+            anim.SetBool("IsJumping", false);
             jumpFrame = 0f;
             jumped = false;
         }
@@ -242,6 +236,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
+
+            anim.SetBool("IsJumping", false);
             jumpFrame = 0f;
             jumped = false;
         }
