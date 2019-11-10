@@ -39,13 +39,11 @@ public class CleanController : MonoBehaviour
             {
                 Jump(normalJumpForce);
                 Ability_Comb();
-                Ability_BlackHole();
             }
             else // Speciell input
             {
                 Jump(superJumpForce);
                 Ability_Comb();
-                Ability_BlackHole();
             }
         }
     }
@@ -53,7 +51,7 @@ public class CleanController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
             TakeDamage(2,2);
@@ -119,18 +117,13 @@ public class CleanController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.H) && Time.time - currentTime >= combustionCoolDown)
         {
+            currentTime = Time.time;
             anim.SetBool("IsCompressing", true);
             GameObject Combustion = Instantiate(combustionPrefab, transform);
             Combustion.SetActive(true);
-            currentTime = Time.time;
         }
     }
-
-    void Ability_BlackHole()
-    {
-
-    }
-
+    
     void Jump(float jumpForceWanted)
     {
         jumpForce = jumpForceWanted;
