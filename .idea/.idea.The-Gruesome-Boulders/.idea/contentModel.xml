@@ -211,13 +211,18 @@
             <e p="UnityReferenceHelper.cs" t="Include" />
           </e>
         </e>
+        <e p="Enemy.cs" t="Include" />
+        <e p="EnemyGFX.cs" t="Include" />
         <e p="ExitLevel.cs" t="Include" />
         <e p="MainMenu.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
           <e p="CameraM.cs" t="Include" />
+          <e p="checkGroudn.cs" t="Include" />
           <e p="Combustion.cs" t="Include" />
           <e p="explosion.cs" t="Include" />
+          <e p="groundDetectScript.cs" t="Include" />
+          <e p="groundgroundscript.cs" t="Include" />
           <e p="MplayerMove.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerMove.cs" t="Include" />
