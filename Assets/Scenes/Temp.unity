@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &174557999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1179317342258597251, guid: 56404c149d63b412aa6ffbc687474e8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 857917327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &198246708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1471,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56404c149d63b412aa6ffbc687474e8a, type: 3}
+--- !u!1 &883212413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1179317342258597251, guid: 56404c149d63b412aa6ffbc687474e8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 458536020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!58 &894962102
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1596,9 +1608,8 @@ MonoBehaviour:
     type: 3}
   costAbility2: 40
   combustionPrefab: {fileID: 1059504266}
-  combustionPrefab2: {fileID: 0}
-  explosionobject: {fileID: 1179317342258597251, guid: 56404c149d63b412aa6ffbc687474e8a,
-    type: 3}
+  combustionPrefab2: {fileID: 174557999}
+  combustionPrefab3: {fileID: 883212413}
   costAbility3: 10
   ability3collider: {fileID: 1179317342258597252, guid: 56404c149d63b412aa6ffbc687474e8a,
     type: 3}
