@@ -43,3 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 1438255099
+    locked: 0
+  - name: Bakground
+    uniqueID: 3944989577
+    locked: 0
+  - name: Fourground
+    uniqueID: 1308349369
+    locked: 0
