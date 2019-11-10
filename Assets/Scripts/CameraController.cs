@@ -49,6 +49,7 @@ public class CameraController : MonoBehaviour
         {
             whenStationary(moveHorizontal);
             desiredPosition += up;
+            
         }else if (moveVertical == -1f)
         {
             whenStationary(moveHorizontal);
