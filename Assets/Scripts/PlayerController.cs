@@ -135,16 +135,12 @@ public class PlayerController : MonoBehaviour
         }
         if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
-            jumpForce = 350f;
             anim.SetBool("IsJumping", true);
+            jumpForce = 350f;
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
             jumped = true;
             jumpForce = 0f;
-        }
-        else
-        {
-            anim.SetBool("IsJumping", false);
         }
 
         //Här börjar chargejump extra feature
@@ -161,21 +157,15 @@ public class PlayerController : MonoBehaviour
 
         if(jumpValue == 0f && Input.GetKey(KeyCode.LeftShift) && !jumped)
         {
-            anim.SetBool("IsJumping", true);
             jumped = true;
             p1.AddForce(new Vector2(0f, jumpForce));
             jumpForce = 0f;
             charge = false;
         }
-        else
-        {
-            anim.SetBool("IsJumping", false);
-        }
 
         p1.transform.position = new Vector3(p1.transform.position.x + moveX*speed, p1.transform.position.y , p1.transform.position.z);
 
         //p1.GetComponent<BoxCollider2D>().OverlapCollider
-
 
 
     }
@@ -186,6 +176,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpFrame = 0f;
             jumped = false;
+            //Landing anim
         }
 
 

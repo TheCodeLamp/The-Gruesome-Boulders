@@ -215,6 +215,7 @@
           <e p="CameraController.cs" t="Include" />
           <e p="CameraM.cs" t="Include" />
           <e p="Combustion.cs" t="Include" />
+          <e p="explosion.cs" t="Include" />
           <e p="MplayerMove.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="PlayerMove.cs" t="Include" />
