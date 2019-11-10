@@ -13,9 +13,10 @@ public class PlayerController : MonoBehaviour
     public Transform firepoint2;
     public Transform firepoint3;
     public Transform firepoint4;
+    public Transform firepoint5;
     public float speed;
     public Rigidbody2D p1;
-    public Rigidbody p2;
+    public GameObject playerGameObj;
     public float moveX;
     public float direction;
     public float jumpForce;
@@ -36,23 +37,38 @@ public class PlayerController : MonoBehaviour
     public float costAbility2;
     private bool ability2Pressed;
     public GameObject combustionPrefab;
-    public GameObject explosionobject;
+    public GameObject combustionPrefab2;
+    public GameObject combustionPrefab3;
     private float ability3;
     public float costAbility3;
     private bool ability3Pressed;
 
+    public GameObject rotationAxis; 
+    public CircleCollider2D ability3collider;
+    public List<CircleCollider2D> objects;
+    public CircleCollider2D[] colliders;
+
+    //Make sure you attach a Rigidbody in the Inspector of this GameObject
+    public Rigidbody m_Rigidbody;
+    public Vector3 m_EulerAngleVelocity;
     void Start()
     {
         anim = GetComponent<Animator>();
         p1 = GetComponent<Rigidbody2D>();
         jumpFrame = 0f;
         charge = false;
+        combustionPrefab.SetActive(false);
+        combustionPrefab2.SetActive(false);
+        //Set the axis the Rigidbody rotates in (100 in the y axis)
+        m_EulerAngleVelocity = new Vector3(0, 180, 0);
 
+        //Fetch the Rigidbody from the GameObject with this script attached
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
         //Store the current horizontal input in the float moveHorizontal.
         float moveHorizontal = Input.GetAxis("Horizontal");
 
@@ -104,14 +120,39 @@ public class PlayerController : MonoBehaviour
         {
             if (parts >= costAbility3 && ability3Pressed)
             {
-                parts -= costAbility2;
+                parts -= costAbility3;
                 print("pangpang");
+                combustionPrefab.SetActive(true);
+
+
+                //(Instantiate(explosionobject, firepoint5.position, firepoint5.rotation) as GameObject).transform.parent = playerGameObj.transform;
             }
             ability3Pressed = false;
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            combustionPrefab.SetActive(false);
+            combustionPrefab2.SetActive(true);
+            combustionPrefab3.SetActive(true);
+            print("pooooof");
 
+        }
+        if(Input.GetKeyUp(KeyCode.O))
+        {
+            combustionPrefab2.SetActive(false);
+            combustionPrefab3.SetActive(false);
+        }
+
+
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotationAxis.transform.RotateAround(p1.transform.position, Vector3.forward, -100f * Time.deltaTime);
+        }
         if (moveHorizontal > 0)
         {
+            rotationAxis.transform.position = new Vector3(p1.transform.position.x +
+            ((p1.transform.position.x+0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
             anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
@@ -119,8 +160,11 @@ public class PlayerController : MonoBehaviour
             angles.y = 180;
             p1.transform.rotation = Quaternion.Euler(angles);
 
-        }else if(moveHorizontal < 0)
+        }
+        else if(moveHorizontal < 0)
         {
+            rotationAxis.transform.position = new Vector3(p1.transform.position.x -
+            ((p1.transform.position.x + 0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
             anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
@@ -133,10 +177,10 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsRunning", false);
             moveX = 0f;
         }
-        if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
+        if (jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
+            jumpForce = 3500f;
             anim.SetBool("IsJumping", true);
-            jumpForce = 350f;
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
             jumped = true;
@@ -157,6 +201,7 @@ public class PlayerController : MonoBehaviour
 
         if(jumpValue == 0f && Input.GetKey(KeyCode.LeftShift) && !jumped)
         {
+            anim.SetBool("IsJumping", true);
             jumped = true;
             p1.AddForce(new Vector2(0f, jumpForce));
             jumpForce = 0f;
@@ -168,15 +213,17 @@ public class PlayerController : MonoBehaviour
         //p1.GetComponent<BoxCollider2D>().OverlapCollider
 
 
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("ground"))
         {
+
+            anim.SetBool("IsJumping", false);
             jumpFrame = 0f;
             jumped = false;
-            //Landing anim
         }
 
 
@@ -189,6 +236,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
+
+            anim.SetBool("IsJumping", false);
             jumpFrame = 0f;
             jumped = false;
         }
