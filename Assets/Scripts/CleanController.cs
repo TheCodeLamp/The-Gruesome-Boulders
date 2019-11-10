@@ -16,11 +16,13 @@ public class CleanController : MonoBehaviour
 
     [HideInInspector]
     public Rigidbody2D p1;
+    public float playerHealth;
 
     // Private
     private float moveHorizontal, verticalAxis, moveX, jumpForce, currentTime;
     public int moveDirX, moveDirY;
     private bool jumped = false;
+    private bool canMove = true;
     private Vector3 deltaMove = new Vector3();
     private Vector3 m_EulerAngleVelocity;
     private Animator anim;
@@ -37,13 +39,11 @@ public class CleanController : MonoBehaviour
             {
                 Jump(normalJumpForce);
                 Ability_Comb();
-                Ability_BlackHole();
             }
             else // Speciell input
             {
                 Jump(superJumpForce);
                 Ability_Comb();
-                Ability_BlackHole();
             }
         }
     }
@@ -51,55 +51,80 @@ public class CleanController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            TakeDamage(2,2);
+        }
+    }
+
+    public void TakeDamage(float xPos, float damage)
+    {
+        // xPos är fiendens xpos.
+
+        if(xPos > transform.position.x)
+        {
+            p1.AddForce(new Vector2(-500, 250));
+        }
+        else
+        {
+            p1.AddForce(new Vector2(500, 250));
+        }
+
+        playerHealth -= damage;
+
+        if(playerHealth <= 0)
+        {
+            Die();
+        }
     }
 
     void Move()
     {
-        moveHorizontal = Input.GetAxis("Horizontal");
-        verticalAxis = Input.GetAxis("Vertical");
-
-        if (moveHorizontal > 0)
+        if (canMove)
         {
-            anim.SetBool("IsRunning", true);
-            moveX = 1f;
-            var angles = transform.rotation.eulerAngles;
-            angles.y = 180;
-            p1.transform.rotation = Quaternion.Euler(angles);
+            moveHorizontal = Input.GetAxis("Horizontal");
+            verticalAxis = Input.GetAxis("Vertical");
 
-        }
-        else if (moveHorizontal < 0)
-        {
-            anim.SetBool("IsRunning", true);
-            moveX = -1f;
-            var angles = transform.rotation.eulerAngles;
-            angles.y = 0;
-            p1.transform.rotation = Quaternion.Euler(angles);
-        }
-        else
-        {
-            anim.SetBool("IsRunning", false);
-            moveX = 0f;
-        }
+            if (moveHorizontal > 0)
+            {
+                anim.SetBool("IsRunning", true);
+                moveX = 1f;
+                var angles = transform.rotation.eulerAngles;
+                angles.y = 180;
+                p1.transform.rotation = Quaternion.Euler(angles);
 
-        p1.transform.position = new Vector3(p1.transform.position.x + moveX * moveSpeed, p1.transform.position.y, p1.transform.position.z);
+            }
+            else if (moveHorizontal < 0)
+            {
+                anim.SetBool("IsRunning", true);
+                moveX = -1f;
+                var angles = transform.rotation.eulerAngles;
+                angles.y = 0;
+                p1.transform.rotation = Quaternion.Euler(angles);
+            }
+            else
+            {
+                anim.SetBool("IsRunning", false);
+                moveX = 0f;
+            }
+
+            p1.transform.position = new Vector3(p1.transform.position.x + moveX * moveSpeed, p1.transform.position.y, p1.transform.position.z);
+        }
     }
 
     void Ability_Comb()
     {
         if(Input.GetKeyDown(KeyCode.H) && Time.time - currentTime >= combustionCoolDown)
         {
-            //anim.SetBool("",true);
+            currentTime = Time.time;
+            anim.SetBool("IsCompressing", true);
             GameObject Combustion = Instantiate(combustionPrefab, transform);
             Combustion.SetActive(true);
             Combustion.transform.SetParent(null);
             currentTime = Time.time;
 
         }
-    }
-
-    void Ability_BlackHole()
-    {
-
     }
 
     void Jump(float jumpForceWanted)
@@ -120,6 +145,11 @@ public class CleanController : MonoBehaviour
     {
         jumped = false;
         anim.SetBool("IsJumping", false);
+    }
+
+    void Die()
+    {
+        // Game over
     }
 
     private void OnEnable()
@@ -143,5 +173,5 @@ public class CleanController : MonoBehaviour
 
     // Reset jump
 
-    // 
+    //
 }
