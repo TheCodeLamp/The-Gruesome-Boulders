@@ -11,20 +11,21 @@ public class CleanController : MonoBehaviour
     public float combustionCoolDown = 1f;
 
     [Header("References")]
-    public GameObject rotationAxis, combustionPrefab;
+    public GameObject rotationAxis;
+    public GameObject combustionPrefab;
 
     [HideInInspector]
     public Rigidbody2D p1;
-    public Vector3 m_EulerAngleVelocity;
 
     // Private
     private float moveHorizontal, verticalAxis, moveX, jumpForce, currentTime;
     public int moveDirX, moveDirY;
     private bool jumped = false;
     private Vector3 deltaMove = new Vector3();
+    private Vector3 m_EulerAngleVelocity;
     private Animator anim;
-    
-    
+
+
     private void OnGUI()
     {
         Event e = Event.current;
