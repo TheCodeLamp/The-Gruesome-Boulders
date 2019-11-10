@@ -36,6 +36,7 @@ public class explosion : MonoBehaviour
         {
             collision.gameObject.transform.position = new Vector3(player.transform.position.x + (player.transform.position.x - collision.gameObject.transform.position.x),
                 collision.gameObject.transform.position.y, collision.gameObject.transform.position.y);
+            print("höger");
         }else if (Input.GetKeyDown(KeyCode.LeftArrow) && dir == 1f)
         {
             collision.gameObject.transform.position = new Vector3(player.transform.position.x - (player.transform.position.x - collision.gameObject.transform.position.x),

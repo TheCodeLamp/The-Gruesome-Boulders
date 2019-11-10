@@ -43,10 +43,14 @@ public class PlayerController : MonoBehaviour
     public float costAbility3;
     private bool ability3Pressed;
 
-
+    public GameObject rotationAxis; 
     public CircleCollider2D ability3collider;
     public List<CircleCollider2D> objects;
     public CircleCollider2D[] colliders;
+
+    //Make sure you attach a Rigidbody in the Inspector of this GameObject
+    public Rigidbody m_Rigidbody;
+    public Vector3 m_EulerAngleVelocity;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -55,12 +59,16 @@ public class PlayerController : MonoBehaviour
         charge = false;
         combustionPrefab.SetActive(false);
         combustionPrefab2.SetActive(false);
+        //Set the axis the Rigidbody rotates in (100 in the y axis)
+        m_EulerAngleVelocity = new Vector3(0, 180, 0);
 
+        //Fetch the Rigidbody from the GameObject with this script attached
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
         //Store the current horizontal input in the float moveHorizontal.
         float moveHorizontal = Input.GetAxis("Horizontal");
 
@@ -116,6 +124,7 @@ public class PlayerController : MonoBehaviour
                 print("pangpang");
                 combustionPrefab.SetActive(true);
 
+
                 //(Instantiate(explosionobject, firepoint5.position, firepoint5.rotation) as GameObject).transform.parent = playerGameObj.transform;
             }
             ability3Pressed = false;
@@ -126,18 +135,36 @@ public class PlayerController : MonoBehaviour
             combustionPrefab2.SetActive(true);
             combustionPrefab3.SetActive(true);
             print("pooooof");
+
+        }
+        if(Input.GetKeyUp(KeyCode.O))
+        {
+            combustionPrefab2.SetActive(false);
+            combustionPrefab3.SetActive(false);
         }
 
+
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotationAxis.transform.RotateAround(p1.transform.position, Vector3.forward, -100f * Time.deltaTime);
+        }
         if (moveHorizontal > 0)
         {
+            rotationAxis.transform.position = new Vector3(p1.transform.position.x +
+            ((p1.transform.position.x+0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
             anim.SetBool("IsRunning", true);
             moveX = 1f;
             direction = 1f;
             var angles = transform.rotation.eulerAngles;
             angles.y = 180;
             p1.transform.rotation = Quaternion.Euler(angles);
-        }else if(moveHorizontal < 0)
+
+        }
+        else if(moveHorizontal < 0)
         {
+            rotationAxis.transform.position = new Vector3(p1.transform.position.x -
+            ((p1.transform.position.x + 0.1f) - rotationAxis.transform.position.x), p1.transform.position.y, p1.transform.position.z);
             anim.SetBool("IsRunning", true);
             moveX = -1f;
             direction = 1f;
@@ -152,7 +179,7 @@ public class PlayerController : MonoBehaviour
         }
         if(jumpValue > 0 && jumpFrame < jumpCap && !charge && !jumped && !Input.GetKey(KeyCode.LeftShift))
         {
-            jumpForce = 350f;
+            jumpForce = 3500f;
             anim.SetBool("IsJumping", true);
             p1.AddForce(new Vector2(0f, jumpValue * jumpForce));
             jumpFrame++;
